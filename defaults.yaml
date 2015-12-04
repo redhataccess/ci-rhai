@@ -1,0 +1,4 @@
+- wrapper:
+    name: default-wrappers
+    wrappers:
+        - ansicolor

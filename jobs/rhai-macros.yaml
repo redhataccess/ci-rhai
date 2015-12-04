@@ -1,0 +1,60 @@
+- parameter:
+    name: rhai-parameters
+    parameters:
+        - string:
+            name: SERVER_HOSTNAME
+        - choice:
+            name: VERBOSITY
+            choices:
+              - '5'
+              - '4'
+              - '3'
+              - '2'
+              - '1'
+        - choice:
+            name: LOCALE
+            choices:
+                - en_US.UTF-8
+
+- wrapper:
+    name: rhai-wrappers
+    wrappers:
+        - config-file-provider:
+            files:
+                - file-id: org.jenkinsci.plugins.configfiles.custom.CustomConfig1448980950144
+                  variable: ROBOTTELO_CONFIG
+                - file-id: org.jenkinsci.plugins.configfiles.custom.CustomConfig1448982526914
+                  variable: FAKE_CERT_CONFIG
+
+        - workspace-cleanup:
+            include:
+                - 'robottelo*.log'
+
+- builder:
+    name: rhai-builders
+    builders:
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: shell
+            command:
+                !include-raw 'automation.sh'
+
+- publisher:
+    name: rhai-publishers
+    publishers:
+        - archive:
+            artifacts: 'test-foreman-*.svg,robottelo*.log,insights*.log'
+        - junit:
+            results: 'foreman-results.xml'
+        - email-ext:
+            recipients: $DEFAULT_RECIPIENTS
+            reply-to: $DEFAULT_REPLYTO
+            content-type: text
+            subject: $DEFAULT_SUBJECT
+            body: $DEFAULT_CONTENT
+            unstable: true
+            failure: true
+            success: true
+
