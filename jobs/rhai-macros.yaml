@@ -53,7 +53,10 @@
             reply-to: $DEFAULT_REPLYTO
             content-type: text
             subject: $DEFAULT_SUBJECT
-            body: $DEFAULT_CONTENT
+            body: |
+                $PROJECT_NAME - Build number: $BUILD_NUMBER - $BUILD_STATUS:
+
+                Check console output at $BUILD_URL to view the results.
             unstable: true
             failure: true
             success: true
