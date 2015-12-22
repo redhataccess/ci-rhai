@@ -23,8 +23,6 @@
             files:
                 - file-id: org.jenkinsci.plugins.configfiles.custom.CustomConfig1448980950144
                   variable: ROBOTTELO_CONFIG
-                - file-id: org.jenkinsci.plugins.configfiles.custom.CustomConfig1448982526914
-                  variable: FAKE_CERT_CONFIG
 
         - workspace-cleanup:
             include:
@@ -40,23 +38,41 @@
             nature: shell
             command:
                 !include-raw 'automation.sh'
+        - shining-panda:
+            build-environment: virtualenv
+            python-version: System-CPython-2.7
+            clear: true
+            nature: python
+            command:
+                !include-raw 'results.py'
+
+        - inject:
+            properties-file: env.properties
+            script-only-if-succeeded: False
+            script-only-if-failed: False
 
 - publisher:
     name: rhai-publishers
     publishers:
         - archive:
-            artifacts: 'test-foreman-*.svg,robottelo*.log,insights*.log'
+            artifacts: 'robottelo*.log,insights*.log'
         - junit:
             results: 'foreman-results.xml'
+
         - email-ext:
-            recipients: $DEFAULT_RECIPIENTS
+            recipients: $PROJECT_DEFAULT_RECIPIENTS
             reply-to: $DEFAULT_REPLYTO
             content-type: text
-            subject: $DEFAULT_SUBJECT
+            subject: "${PROJECT_NAME} [${BUILD_NUMBER}]: ${TESTS_PASSED} tests passed, ${FAILURES} tests failed! Build Status: ${BUILD_STATUS}"
             body: |
                 $PROJECT_NAME - Build number: $BUILD_NUMBER - $BUILD_STATUS:
+                Total number of tests run: $TESTS
+                Tests passed: $TESTS_PASSED
+                Tests failed: $FAILURES
+                Number of errors: $ERRORS
 
-                Check console output at $BUILD_URL to view the results.
+                Check console output at $BUILD_URL to view the results in detail.
+
             unstable: true
             failure: true
             success: true
