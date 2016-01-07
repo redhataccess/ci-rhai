@@ -29,11 +29,7 @@ for child in root:
       break
     else:
       tests_array.append(test_attribute)
-print tests_array
 
 for i in range(len(tests_array)):
   with open('env.properties', 'a') as f:
     f.write("TEST_CASE" + str(i) + "=" + str(tests_array[i]) + "\n")
-
-
-

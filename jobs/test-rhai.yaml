@@ -1,5 +1,5 @@
 - job:
-    name: test-rhai
+    name: test-insights
     node: rhel7-slave
     parameters:
         - rhai-parameters

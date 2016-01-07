@@ -63,15 +63,22 @@
             recipients: $PROJECT_DEFAULT_RECIPIENTS
             reply-to: $DEFAULT_REPLYTO
             content-type: text
-            subject: "${PROJECT_NAME} [${BUILD_NUMBER}]: ${TESTS_PASSED} tests passed, ${FAILURES} tests failed! Build Status: ${BUILD_STATUS}"
+            subject: "${PROJECT_NAME}:Build number [${BUILD_NUMBER}] : ${TESTS_PASSED} tests passed, ${FAILURES} tests failed! Build Status: ${BUILD_STATUS}"
             body: |
                 $PROJECT_NAME - Build number: $BUILD_NUMBER - $BUILD_STATUS:
+
                 Total number of tests run: $TESTS
                 Tests passed: $TESTS_PASSED
                 Tests failed: $FAILURES
                 Number of errors: $ERRORS
 
                 Check console output at $BUILD_URL to view the results in detail.
+
+                The following tests have failed:
+
+                ${FAILED_TESTS}
+
+                Please check $BUILD_URL for more details.
 
             unstable: true
             failure: true
