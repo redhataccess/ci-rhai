@@ -28,6 +28,12 @@
             include:
                 - 'robottelo*.log'
 
+        - xvfb:
+            installation-name: default
+            debug: true
+            display-name-offset: default
+            shutdown-with-build: default
+
 - builder:
     name: rhai-builders
     builders:
