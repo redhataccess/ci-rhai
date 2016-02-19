@@ -30,14 +30,14 @@
 
         - xvfb:
             installation-name: default
-            auto-display-name: false
+            auto-display-name: true
             display-name: 1
-            assigned-labels: rhel7-slave
+#            assigned-labels: nodes-xxx
             parallel-build: false
             timeout: 10
             screen: 1024x768x16
             display-name-offset: 100
-            additional-options: -fbdir /tmp
+#            additional-options: -fbdir /tmp
             debug: true
             shutdown-with-build: false
 

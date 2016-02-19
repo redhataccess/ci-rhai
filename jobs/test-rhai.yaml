@@ -1,5 +1,5 @@
-- job:
-    name: test-insights
+- job-template:
+    name: sat6-rhi-{instance}-tests
     node: rhel7-slave
     parameters:
         - rhai-parameters
@@ -17,3 +17,12 @@
 
     publishers:
         - rhai-publishers
+
+- project:
+    name: sat6-rhi-tests
+    instance:
+        - prod
+        - qe
+        - ci
+    jobs:
+        - sat6-rhi-{instance}-tests
