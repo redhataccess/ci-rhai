@@ -7,7 +7,7 @@
         - git:
             url: https://github.com/SatelliteQE/robottelo.git
             branches:
-                - origin/master
+                - origin/6.1.z
             skip-tag: true
     wrappers:
         - rhai-wrappers
@@ -26,3 +26,23 @@
         - ci
     jobs:
         - sat6-rhi-{instance}-tests
+
+- job:
+    name: sat62-rhi-tests
+    node: rhel7-slave
+    parameters:
+        - rhai-parameters
+    scm:
+        - git:
+            url: https://github.com/SatelliteQE/robottelo.git
+            branches:
+                - origin/master
+            skip-tag: true
+    wrappers:
+        - rhai-wrappers
+
+    builders:
+        - rhai-builders
+
+    publishers:
+        - rhai-publishers
